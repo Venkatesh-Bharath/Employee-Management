@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.abc.EmployeeManagement.model.Employee;
 import com.abc.EmployeeManagement.service.EmployeeServiceInf;
 
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -29,7 +31,7 @@ public class EmployeeController {
     //Create Employee
     
     @PostMapping
-    public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
+    public ResponseEntity<Employee> createEmployee(@Valid @RequestBody Employee employee) {
         Employee savedEmployee=employeeServiceInf.createEmployee(employee);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedEmployee);
     }
@@ -45,7 +47,7 @@ public class EmployeeController {
 	
 	//Update Employee by Id
 	@PutMapping("/{id}")
-	public  ResponseEntity<Employee>  updateEmployee(@PathVariable int id, @RequestBody Employee employee) {
+	public  ResponseEntity<Employee>  updateEmployee(@PathVariable int id,@Valid  @RequestBody Employee employee) {
 		Employee updatedEmployee=employeeServiceInf.updateEmployee(id,employee);
 		return ResponseEntity.status(HttpStatus.OK).body(updatedEmployee);
 	}

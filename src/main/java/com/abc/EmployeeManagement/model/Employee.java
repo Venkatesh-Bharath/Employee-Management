@@ -4,6 +4,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name="Employee")
@@ -11,10 +15,16 @@ public class Employee {
 	@Id
 	@GeneratedValue
 	private int id;
+	@NotBlank(message = "Name cannot blank")
+	@Size(min = 3,message = "Name should be min 3 character")
 	private String name;
+	@Email
 	private String email;
-	private String pan;
+	@Pattern(regexp = "[A-Z]{5}[0-9]{4}[A-Z]{1}",message = "Invalid PAN format")
+	private String pan;//DSGSP8765P
+	@Size(max = 100,message = "Address should not exceed 100 character")
 	private String address;
+	@Pattern(regexp = "[6-9]{1}[0-9]{9}",message = "Invalid mobile format")
 	private String mobile;
 	public Employee() {
 	}

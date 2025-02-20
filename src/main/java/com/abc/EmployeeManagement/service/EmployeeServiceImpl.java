@@ -4,7 +4,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
+
+import com.abc.EmployeeManagement.exception.ResourseNotFoundException;
 import com.abc.EmployeeManagement.model.Employee;
 import com.abc.EmployeeManagement.repository.EmployeeRepository;
 
@@ -28,7 +29,7 @@ public class EmployeeServiceImpl implements EmployeeServiceInf {
 	@Override
 	public Employee updateEmployee(int id, Employee employee) {
 	    Employee emp=employeeRepository.findById(id)
-	    		.orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee id "+id+" not avilable."));
+	    		.orElseThrow(()->new ResourseNotFoundException(HttpStatus.NOT_FOUND, "Employee id "+id+" not avilable."));
 	    	emp.setName(employee.getName());
 	    	emp.setAddress(employee.getAddress());
 	    	emp.setEmail(employee.getEmail());
@@ -40,7 +41,7 @@ public class EmployeeServiceImpl implements EmployeeServiceInf {
 	@Override
 	public void deleteEmployee(int id) {
 		Employee employee=employeeRepository.findById(id)
-				.orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee id "+id+" not avilable."));
+				.orElseThrow(()->new ResourseNotFoundException(HttpStatus.NOT_FOUND, "Employee id "+id+" not avilable."));
 		employeeRepository.delete(employee);
 	}
 	
