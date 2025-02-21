@@ -1,12 +1,14 @@
 package com.abc.EmployeeManagement.model;
 
+import com.abc.EmployeeManagement.validation.Mobile;
+import com.abc.EmployeeManagement.validation.Pan;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -20,11 +22,13 @@ public class Employee {
 	private String name;
 	@Email
 	private String email;
-	@Pattern(regexp = "[A-Z]{5}[0-9]{4}[A-Z]{1}",message = "Invalid PAN format")
+//	@Pattern(regexp = "[A-Z]{5}[0-9]{4}[A-Z]{1}",message = "Invalid PAN format")
+	@Pan(message = "PAN card not valid")
 	private String pan;//DSGSP8765P
 	@Size(max = 100,message = "Address should not exceed 100 character")
 	private String address;
-	@Pattern(regexp = "[6-9]{1}[0-9]{9}",message = "Invalid mobile format")
+//	@Pattern(regexp = "[6-9]{1}[0-9]{9}",message = "Invalid mobile format")
+	@Mobile
 	private String mobile;
 	public Employee() {
 	}
