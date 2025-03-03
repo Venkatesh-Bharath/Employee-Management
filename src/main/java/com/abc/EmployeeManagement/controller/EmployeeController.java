@@ -49,9 +49,16 @@ public class EmployeeController {
     })
     @PostMapping
     public ResponseEntity<Employee> createEmployee(@Valid @RequestBody Employee employee) {
-    	logger.info("create new employee");
-    	Employee savedEmployee=employeeServiceInf.createEmployee(employee);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedEmployee);
+    	logger.info("Create Employee API called ");
+    	logger.debug("Employee Creating Data {}",employee);
+    	try {
+    		Employee savedEmployee=employeeServiceInf.createEmployee(employee);
+    		logger.info("Employee created successfully with Id:{} ",savedEmployee.getId());
+    		return ResponseEntity.status(HttpStatus.CREATED).body(savedEmployee);
+    	}catch (Exception e) {
+    		logger.error("Error while creating employee:{}",e.getMessage());
+    		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
     }
     
     
@@ -64,7 +71,9 @@ public class EmployeeController {
 	@GetMapping
 	@Operation(summary = "Get All employee",description = "Get All employees eatils in the form list")
 	public ResponseEntity<List<Employee>> getAllEmployees() {
+    	logger.info("Get All Employees API called ");
 		List<Employee> employees=employeeServiceInf.getAllEmployees();
+		logger.debug("Featched Employees",employees);
 		return ResponseEntity.status(HttpStatus.OK).body(employees);
 	}
 	
@@ -74,16 +83,30 @@ public class EmployeeController {
 	public  ResponseEntity<Employee>  updateEmployee(
 			@Parameter(description = "Int id for update",example = "1") @PathVariable int id,
 			@Valid  @RequestBody Employee employee) {
-		Employee updatedEmployee=employeeServiceInf.updateEmployee(id,employee);
-		return ResponseEntity.status(HttpStatus.OK).body(updatedEmployee);
+		logger.info("Update Employee API called ");
+		try {
+			Employee updatedEmployee=employeeServiceInf.updateEmployee(id,employee);
+			logger.info("Employee Updated successfully with Id:{} ",id,updatedEmployee);
+			return ResponseEntity.status(HttpStatus.OK).body(updatedEmployee);
+	    }catch (Exception e) {
+	    	logger.error("Error while Updating employee:{}",id,e.getMessage());
+	    	return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
 	}
 	
 	//Delete Employee by Id
 	@Operation(summary = "delete employee By Id",description = "Delete Employee deatils using employee id")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteEmployee(@PathVariable int id){
-		employeeServiceInf.deleteEmployee(id);
-		return ResponseEntity.noContent().build();
+		logger.warn("Delete Employee API called ");
+		try {
+			employeeServiceInf.deleteEmployee(id);
+			logger.info("Employee Deleted successfully with Id:{} ",id);
+			return ResponseEntity.noContent().build();
+		}catch (Exception e) {
+			logger.error("Error while Updating employee:{}",id,e.getMessage());
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
 	}
 	
 	
