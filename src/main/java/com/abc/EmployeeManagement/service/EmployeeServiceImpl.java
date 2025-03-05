@@ -42,11 +42,20 @@ public class EmployeeServiceImpl implements EmployeeServiceInf {
 	    		.orElseThrow(()->{
 					logger.error("Employee id {} not found",id);
 					return new ResourseNotFoundException(HttpStatus.NOT_FOUND, "Employee id "+id+" not avilable.");
-					});emp.setName(employee.getName());
-	    	emp.setAddress(employee.getAddress());
-	    	emp.setEmail(employee.getEmail());
-	    	emp.setMobile(employee.getMobile());
-	    	emp.setPan(employee.getPan());
+					});
+//	        emp.setName(employee.getName());
+//	    	emp.setAddress(employee.getAddress());
+//	    	emp.setEmail(employee.getEmail());
+//	    	emp.setMobile(employee.getMobile());
+//	    	emp.setPan(employee.getPan());
+	    emp=new Employee.Builder()
+	    		.id(emp.getId())
+	    		.name(employee.getName())
+	    		.email(employee.getEmail())
+	    		.pan(employee.getPan())
+	    		.mobile(employee.getMobile())
+	    		.address(employee.getAddress())
+	    		.build();
 	    Employee updatedEmployee=employeeRepository.save(emp);
 	    logger.info("Update Employee successfuly");
 	    return updatedEmployee;
