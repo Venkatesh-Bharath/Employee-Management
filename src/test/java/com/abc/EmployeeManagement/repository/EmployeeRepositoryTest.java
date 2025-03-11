@@ -22,12 +22,12 @@ public class EmployeeRepositoryTest {
 	@Autowired
 	private EmployeeRepository employeeRepository;
 	
-	private Employee empolyee;
+	private Employee employee;
 	
 	@BeforeEach
 	void setUp() {
 		employeeRepository.deleteAll();
-		empolyee=new Employee.Builder()
+		employee=new Employee.Builder()
 				.name("BSK")
 				.email("bsk@gmail.com")
 				.pan("GGGGG8765P")
@@ -39,17 +39,17 @@ public class EmployeeRepositoryTest {
 	@Test
 	@DisplayName("Save Employee Repository Test")
 	void saveEmployeeTest() {
-		Employee savedEmployee=employeeRepository.save(empolyee);
+		Employee savedEmployee=employeeRepository.save(employee);
 		
 		assertThat(savedEmployee).isNotNull();
-		assertThat(savedEmployee.getName()).isEqualTo(empolyee.getName());
-		assertThat(savedEmployee.getEmail()).isEqualTo(empolyee.getEmail());	
+		assertThat(savedEmployee.getName()).isEqualTo(employee.getName());
+		assertThat(savedEmployee.getEmail()).isEqualTo(employee.getEmail());	
 	}
 	
 	@Test
 	@DisplayName("Get all Employees")
 	void getAllEmployees() {
-		employeeRepository.save(empolyee);
+		employeeRepository.save(employee);
 		List<Employee> employees=employeeRepository.findAll();
 		
 		assertThat(employees).isNotEmpty();
@@ -59,7 +59,7 @@ public class EmployeeRepositoryTest {
 	@Test
 	@DisplayName("Update Employee Repository Test")
 	void updateEmployeeTest() {
-		Employee savedEmployee=employeeRepository.save(empolyee);
+		Employee savedEmployee=employeeRepository.save(employee);
 		
 		savedEmployee=new Employee.Builder()
 				.id(savedEmployee.getId())
@@ -83,7 +83,7 @@ public class EmployeeRepositoryTest {
 	@Test
 	@DisplayName("Delete Employee Repository Test")
 	void deleteEmployeeTest() {
-		Employee savedEmployee=employeeRepository.save(empolyee);
+		Employee savedEmployee=employeeRepository.save(employee);
 		employeeRepository.deleteById(savedEmployee.getId());
 		
 		Optional<Employee> deleteEmployee=employeeRepository.findById(savedEmployee.getId());
