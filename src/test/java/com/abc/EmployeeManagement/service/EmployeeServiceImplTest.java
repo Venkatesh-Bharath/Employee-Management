@@ -114,7 +114,7 @@ public class EmployeeServiceImplTest {
 	
 	
 	@Test
-	@DisplayName("Update Employee Test")
+	@DisplayName("Delete Employee Test")
 	void deleteEmployeeTestSuccess() {
 		when(employeeRepository.findById(1)).thenReturn(Optional.of(employee));
 		

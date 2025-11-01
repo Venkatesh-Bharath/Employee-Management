@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 
 @RestController
-@RequestMapping("/api/v1/employees")
+@RequestMapping("/api/v1/employee")
 @Tag(name = "Employee Controller",description = "Employee Create, read, update and delete")
 public class EmployeeController {
     @Autowired
